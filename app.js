@@ -48,7 +48,49 @@ app.get('/sendMsg/:text', function(req, res, next){
     }
    
    // bot.sendMessage(chatId, "пинг", {caption: "I'm a bot!"});
-    res.send("ok");
+    res.send("sended to all");
+}); 
+
+app.get('/sendMsg/:text/:chatId', function(req, res, next){ 
+    
+    if(!chats[req.params.chatId]){
+        res.send("Chat "+ req.params.chatId + " not found ^(");
+        console.log("Chat "+ req.params.chatId + " not found ^(")
+        return
+    }
+
+    chats[req.params.chatId].sendMsg(req.params.text)
+    res.send("sended private to "+getChatName(chats[req.params.chatId].data));
+}); 
+
+app.get('/list', function(req, res, next){ 
+    
+    if(Object.keys(chats).length == 0){
+        res.send("No active chats");
+        console.log("No active chats")
+        return
+    }
+    var answer = [];
+    for(var i in chats){
+        // console.log(i, chats[i])
+        var el = chats[i]
+        answer.push({id: el.id,
+            name: getChatName(el.data)
+        })
+    }
+
+   // bot.sendMessage(chatId, "пинг", {caption: "I'm a bot!"});
+    res.send(answer);
+}); 
+
+app.get('/', function(req, res, next){ 
+    var urls = {"list":"список комнат", "sendTxt/<b>строка</b>":"рассылка строки во ВСЕМ комнатам", "sendTxt/<b>строка</b>/<i>id комнаты</i>":"отсылка строки в конкретную комнату"}
+    var ans = ""
+    for(var i in urls){
+        ans+="<tr><td>/"+i+"</td><td>"+urls[i]+"</td>"
+    }
+    var ans = "<h3>Urls list</h3><table border='1'>"+ ans +"</table>"
+    res.send(ans);
 }); 
 
 bot.on('message', function (msg) {
