@@ -35,16 +35,13 @@ app.use(function(req, res, next) {
 });
 
 app.get('/sendMsg/:text', function(req, res, next){ 
-    // console.log(req.body)
-    // res.send("ok");
-    // return
-
+    
     if(Object.keys(chats).length == 0){
         res.send("No active chats");
         console.log("No active chats")
         return
     }
-    //console.log("Send '"+req.params.text+"'")
+   
     for(var chatId in chats){
         
         chats[chatId].sendMsg(req.params.text)
@@ -84,7 +81,7 @@ bot.on('message', function (msg) {
         bot.sendMessage(chatId, answer.join("\n\r"), {caption: "I'm a bot!"});
     }
 
-    if(msg.text && !!~msg.text.search( /\/kick (\d+)/ )){
+    if(msg.text && !!~msg.text.search( /\/kick -?(\d+)/ )){
         var idForKick = msg.text.match( /\/kick (\d+)/ )[1]
         var chatName = getChatName(chats[idForKick].data);
         chats[idForKick].sendMsg("You have been kicked from send list.")
