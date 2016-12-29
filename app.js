@@ -23,7 +23,7 @@ var getChatName = function(obj){
 var combineUserName = function(obj){
     var result = obj.first_name
     if(obj.last_name)result += " "+obj.last_name;
-    if(obj.username)result += " ("+obj.last_name+")";
+    if(obj.username)result += " ("+obj.username+")";
     return result
 }
 
