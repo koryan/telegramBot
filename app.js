@@ -84,7 +84,7 @@ app.get('/list', function(req, res, next){
 }); 
 
 app.get('/', function(req, res, next){ 
-    var urls = {"list":"список комнат", "sendTxt/<b>строка</b>":"рассылка строки во ВСЕМ комнатам", "sendTxt/<b>строка</b>/<i>id комнаты</i>":"отсылка строки в конкретную комнату"}
+    var urls = {"list":"список комнат", "sendMsg/<b>строка</b>":"рассылка строки во ВСЕМ комнатам", "sendMsg/<b>строка</b>/<i>id комнаты</i>":"отсылка строки в конкретную комнату"}
     var ans = ""
     for(var i in urls){
         ans+="<tr><td>/"+i+"</td><td>"+urls[i]+"</td>"
